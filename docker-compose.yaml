@@ -1,0 +1,109 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      # bind mount between your local ./frontend directory and the /app directory inside the container
+      # ensure that the container uses the installed dependencies from inside the container rather than pulling them from your local system
+      - /app/node_modules
+      - ./frontend:/app 
+    environment:
+      # A file watching library for hot-reloading
+      CHOKIDAR_USEPOLLING: "true"
+
+  backend:
+    build: ./backend
+    ports:
+      - 8081:8081
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db 
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/evernorth?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+
+  db:
+    image: mysql:8.0
+    container_name: db
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root 
+      - MYSQL_DATABASE=evernorth
+      - MYSQL_USER=evernorth_user
+      - MYSQL_PASSWORD=root
+
+
+
+      
+    # volumes:
+    #   - ./mysql-init:/docker-entrypoint-initdb.d
+
+    # volumes:
+    #   - mysql_data:/var/lib/mysql
+
+
+  #   depends_on:
+  #     - psql
+  #   environment:
+  #     - SPRING_DATASOURCE_URL=jdbc:postgresql://psql:5432/evernorth?autoReconnect=true
+  #     - SPRING_DATASOURCE_USERNAME=root
+  #     - SPRING_DATASOURCE_PASSWORD=root
+  
+  # psql:
+  #   image: postgres
+  #   container_name: database
+  #   environment:
+  #     - POSTGRES_USER=root
+  #     - POSTGRES_PASSWORD=root
+  #     - POSTGRES_DB=evernorth
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #     - ./mysql-init:/docker-entrypoint-initdb.d
+
+
+
+#     depends_on:
+#       - mysql
+#     environment:
+#       - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/evernorth?useSSL=false&serverTimezone=UTC
+#       - SPRING_DATASOURCE_USERNAME=root
+#       - SPRING_DATASOURCE_PASSWORD=root
+
+#   mysql:
+#     image: mysql:8.0
+#     ports:
+#       - "3306:3306"
+#     environment:
+#       - MYSQL_ROOT_PASSWORD=root 
+#       - MYSQL_DATABASE=evernorth
+#       - MYSQL_USER=root
+#       - MYSQL_PASSWORD=root
+#     volumes:
+#       - mysql_data:/var/lib/mysql
+#       # - ./mysql-init:/docker-entrypoint-initdb.d
+
+# volumes:
+#   mysql_data:
+
+
+  # depends_on:
+  #     - db
+  #   environment:
+  #     - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/mydb?autoReconnect=true
+  #     - SPRING_DATASOURCE_USERNAME=user
+  #     - SPRING_DATASOURCE_PASSWORD=password
+  
+  # db:
+  #   image: postgres
+  #   container_name: db
+  #   environment:
+  #     - POSTGRES_USER=user
+  #     - POSTGRES_PASSWORD=password
+  #     - POSTGRES_DB=mydb
+  #   ports:
+  #     - 5432:5432
