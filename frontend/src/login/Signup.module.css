@@ -1,0 +1,60 @@
+.container{
+    display: grid;
+    place-items: center;
+    background-image: url('./assets/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  }
+
+  .LoginCard{
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 15px;
+    box-shadow: 5px 5px 5px rgb(142, 137, 137);
+    text-align: left;
+    width: 400px;
+    padding: 50px;
+    align-items: center;
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    
+  }
+
+  .container input{
+    width: 250px;
+    padding: 10px;
+    border-radius: 8px;
+    display: block;
+    margin:auto;
+    margin-top: 4px;
+    color: rgb(124, 126, 129);
+    box-shadow: none;
+  }
+
+  .container button{
+    background-color: rgb(0, 46, 106);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    width:250px;
+    padding: 10px;
+    border-radius: 30px;
+    display: block;
+    margin: auto;
+    margin-top: 18px;
+  }
+
+  .container select{
+    width: 274px;
+    padding: 10px;
+    border-radius: 8px;
+    display: block;
+    margin:auto;
+    margin-top: 4px;
+    color: rgb(124, 126, 129);
+    box-shadow: none;
+    background-color: white;
+  }
+  
